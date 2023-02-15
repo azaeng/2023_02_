@@ -1,5 +1,7 @@
 package com.KoreaIT.java.AM;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -9,24 +11,43 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		
 		int articlesSize = 0;
-		String[] titles = new String[1000];
-		String[] contents = new String[1000];
 		
-		while(true) {	
-			System.out.printf("명령어 : ");
-			String cmd = sc.nextLine();
+		List<Article> articles = new ArrayList<>();
+		
+		while(true) {
 			
+			System.out.printf("명령어	: ");
+			String cmd = sc.nextLine();
 			if(cmd.equals("article list")) {
-					System.out.println("게시글이 없습니다");
+				if(articles.size() == 0) {
+					System.out.println("게시글이 없습니다");					
+				}
+				else {
+					System.out.println("번호	/	제목");
+					for (int i = articles.size() - 1; i >= 0; i--) {
+						Article article = articles.get(i);
+						System.out.println(article.id + "	/	" + article.titles);
+					}
+				}
 			}
 			
 			else if(cmd.equals("article write")) {
-				System.out.printf("제목 : ");
-				titles[articlesSize] = sc.nextLine();
-				System.out.printf("내용 : ");
-				contents[articlesSize] = sc.nextLine();
+				int id = articlesSize + 1;
+				System.out.printf("제목	: ");
+				String titles = sc.nextLine();
+				System.out.printf("내용	: ");
+				String contents = sc.nextLine();
+				
+				Article article = new Article(id, titles, contents);
+				articles.add(article);
+				
+				System.out.println(id + "번글이 생성되었습니다");
 				articlesSize++;
-				System.out.printf("%d번글이 생성되었습니다\n", articlesSize);
+			}
+			
+			else if(cmd.equals("")) {
+				System.out.println("명령어를 입력해주세요");
+				continue;
 			}
 			
 			else if(cmd.equals("system exit")) {
@@ -39,5 +60,17 @@ public class Main {
 		}
 		System.out.println("== 프로그램 종료 ==");
 		sc.close();
+	}
+}
+
+class Article {
+	int id;
+	String titles;
+	String contents;
+
+	Article(int id, String titles, String contents) {
+		this.id = id;
+		this.titles = titles;
+		this.contents = contents;
 	}
 }
