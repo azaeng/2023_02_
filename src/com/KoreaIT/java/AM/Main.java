@@ -22,7 +22,8 @@ public class Main {
 			String cmd = sc.nextLine().trim();
 			if(cmd.equals("article list")) {
 				if(articles.size() == 0) {
-					System.out.println("게시글이 없습니다");					
+					System.out.println("게시글이 없습니다");
+					System.out.println(articles.size());
 				}
 				else {
 					System.out.println("번호	/	제목");
@@ -30,6 +31,7 @@ public class Main {
 						Article article = articles.get(i);
 						System.out.println(article.id + "	/	" + article.titles);
 					}
+					System.out.println(articles.size());
 				}
 			}
 			
@@ -56,7 +58,7 @@ public class Main {
 					if(isNumeric(num[2])) {
 						int i = Integer.parseInt(num[2]) - 1;
 						
-						if(articles.size() == 0 || articles.size() < i) {
+						if(articles.size() == 0 || articles.size() < i + 1) {
 							System.out.println((i + 1) + "번 게시물은 존재하지 않습니다");					
 						}
 						else {
@@ -76,14 +78,13 @@ public class Main {
 					System.out.println("존재하지 않는 명령어입니다");
 				}
 			}
-			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 			else if(cmd.startsWith("article delete")) {
 				String[] num = cmd.split(" ");
 				if(num.length == 3) {
 					if(isNumeric(num[2])) {
 						int i = Integer.parseInt(num[2]) - 1;
 						
-						if(articles.size() == 0 || articles.size() < i) {
+						if(articles.size() == 0 || articles.size() < i + 1) {
 							System.out.println((i + 1) + "번 게시물은 존재하지 않습니다");					
 						}
 						else {
@@ -93,6 +94,33 @@ public class Main {
 								article.id = j + 1;
 							}
 							System.out.println((i + 1) + "번 게시물이 삭제되었습니다 ");
+						}
+					}
+					else {
+						System.out.println("존재하지 않는 명령어입니다");
+					}
+				}
+				else {
+					System.out.println("존재하지 않는 명령어입니다");
+				}
+			}
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			else if(cmd.startsWith("article modify")) {
+				String[] num = cmd.split(" ");
+				if(num.length == 3) {
+					if(isNumeric(num[2])) {
+						int i = Integer.parseInt(num[2]) - 1;
+						
+						if(articles.size() == 0 || articles.size() < i + 1) {
+							System.out.println((i + 1) + "번 게시물은 존재하지 않습니다");					
+						}
+						else {
+							Article article = articles.get(i);
+							System.out.printf("제목	: ");
+							article.titles = sc.nextLine();
+							System.out.printf("내용	: ");
+							article.contents = sc.nextLine();
+							System.out.println((i + 1) + "번 게시물이 수정되었습니다 ");
 						}
 					}
 					else {
