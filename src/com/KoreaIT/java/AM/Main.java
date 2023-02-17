@@ -17,21 +17,19 @@ public class Main {
 		List<Article> articles = new ArrayList<>();
 		
 		while(true) {
-			
+			System.out.flush();
 			System.out.printf("명령어	: ");
 			String cmd = sc.nextLine().trim();
 			if(cmd.equals("article list")) {
 				if(articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
-					System.out.println(articles.size());
 				}
 				else {
-					System.out.println("번호	/	제목");
+					System.out.println("번호	/	제목	/	조회");
 					for (int i = articles.size() - 1; i >= 0; i--) {
 						Article article = articles.get(i);
-						System.out.println(article.id + "	/	" + article.titles);
+						System.out.println(article.id + "	/	" + article.titles + "	/	" + article.view);
 					}
-					System.out.println(articles.size());
 				}
 			}
 			
@@ -45,8 +43,9 @@ public class Main {
 				Date now = new Date();
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String date = formatter.format(now);
+				int view = 0;
 				
-				Article article = new Article(id, titles, contents, date);
+				Article article = new Article(id, titles, contents, date, view);
 				articles.add(article);
 				
 				System.out.println(id + "번글이 생성되었습니다");
@@ -68,6 +67,7 @@ public class Main {
 							System.out.println("번호	: " + article.id);
 							System.out.println("제목	: " + article.titles);
 							System.out.println("내용	: " + article.contents);
+							article.view++;
 						}
 					}
 					else {
@@ -104,7 +104,6 @@ public class Main {
 					System.out.println("존재하지 않는 명령어입니다");
 				}
 			}
-			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 			else if(cmd.startsWith("article modify")) {
 				String[] num = cmd.split(" ");
 				if(num.length == 3) {
@@ -131,7 +130,6 @@ public class Main {
 					System.out.println("존재하지 않는 명령어입니다");
 				}
 			}
-			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 			else if(cmd.equals("")) {
 				System.out.println("명령어를 입력해주세요");
 				continue;
@@ -158,11 +156,13 @@ class Article {
 	String titles;
 	String contents;
 	String date;
+	int view;
 	
-	Article(int id, String titles, String contents, String date) {
+	Article(int id, String titles, String contents, String date, int view) {
 		this.id = id;
 		this.titles = titles;
 		this.contents = contents;
 		this.date = date;
+		this.view = view;
 	}
 }
