@@ -57,25 +57,19 @@ public class App {
 			}
 			else if(cmd.startsWith("article detail")) {
 				String[] num = cmd.split(" ");
-				if(num.length == 3) {
-					if(isNumeric(num[2])) {
-						int i = Integer.parseInt(num[2]) - 1;
-						
-						if(articles.size() == 0 || articles.size() < i + 1) {
-							System.out.println((i + 1) + "번 게시물은 존재하지 않습니다");					
-						}
-						else {
-							Article article = articles.get(i);
-							
-							System.out.println("날짜	: " + article.date);
-							System.out.println("번호	: " + article.id);
-							System.out.println("제목	: " + article.titles);
-							System.out.println("내용	: " + article.contents);
-							article.view++;
-						}
+				int i = Integer.parseInt(num[2]) - 1;
+				if(isNull(cmd)) {
+					if(articles.size() == 0 || articles.size() < i + 1) {
+						System.out.println((i + 1) + "번 게시물은 존재하지 않습니다");					
 					}
 					else {
-						System.out.println("존재하지 않는 명령어입니다");
+						Article article = articles.get(i);
+							
+						System.out.println("날짜	: " + article.date);
+						System.out.println("번호	: " + article.id);
+						System.out.println("제목	: " + article.titles);
+						System.out.println("내용	: " + article.contents);
+						article.view++;
 					}
 				}
 				else {
@@ -84,24 +78,18 @@ public class App {
 			}
 			else if(cmd.startsWith("article delete")) {
 				String[] num = cmd.split(" ");
-				if(num.length == 3) {
-					if(isNumeric(num[2])) {
-						int i = Integer.parseInt(num[2]) - 1;
-						
-						if(articles.size() == 0 || articles.size() < i + 1) {
-							System.out.println((i + 1) + "번 게시물은 존재하지 않습니다");					
-						}
-						else {
-							articles.remove(i);
-							for (int j = articles.size() - 1; j >= 0; j--) {
-								Article article = articles.get(j);
-								article.id = j + 1;
-							}
-							System.out.println((i + 1) + "번 게시물이 삭제되었습니다 ");
-						}
+				int i = Integer.parseInt(num[2]) - 1;
+				if(isNull(cmd)) {
+					if(articles.size() == 0 || articles.size() < i + 1) {
+						System.out.println((i + 1) + "번 게시물은 존재하지 않습니다");					
 					}
 					else {
-						System.out.println("존재하지 않는 명령어입니다");
+						articles.remove(i);
+						for (int j = articles.size() - 1; j >= 0; j--) {
+							Article article = articles.get(j);
+							article.id = j + 1;
+						}
+						System.out.println((i + 1) + "번 게시물이 삭제되었습니다 ");
 					}
 				}
 				else {
@@ -110,24 +98,18 @@ public class App {
 			}
 			else if(cmd.startsWith("article modify")) {
 				String[] num = cmd.split(" ");
-				if(num.length == 3) {
-					if(isNumeric(num[2])) {
-						int i = Integer.parseInt(num[2]) - 1;
-						
-						if(articles.size() == 0 || articles.size() < i + 1) {
-							System.out.println((i + 1) + "번 게시물은 존재하지 않습니다");					
-						}
-						else {
-							Article article = articles.get(i);
-							System.out.printf("제목	: ");
-							article.titles = sc.nextLine();
-							System.out.printf("내용	: ");
-							article.contents = sc.nextLine();
-							System.out.println((i + 1) + "번 게시물이 수정되었습니다 ");
-						}
+				int i = Integer.parseInt(num[2]) - 1;
+				if(isNull(cmd)) {
+					if(articles.size() == 0 || articles.size() < i + 1) {
+					System.out.println((i + 1) + "번 게시물은 존재하지 않습니다");					
 					}
 					else {
-						System.out.println("존재하지 않는 명령어입니다");
+						Article article = articles.get(i);
+						System.out.printf("제목	: ");
+						article.titles = sc.nextLine();
+						System.out.printf("내용	: ");
+						article.contents = sc.nextLine();
+						System.out.println((i + 1) + "번 게시물이 수정되었습니다 ");
 					}
 				}
 				else {
@@ -159,7 +141,8 @@ public class App {
 		}
 	}
 	
-	private static boolean isNumeric(String str){
-        return str != null && str.matches("[0-9.]+");
-    }
+	private static boolean isNull(String str){
+		String[] num = str.split(" ");
+		return (num[2] != null && num[2].matches("[0-9.]+")) && (num.length == 3);
+	}
 }
