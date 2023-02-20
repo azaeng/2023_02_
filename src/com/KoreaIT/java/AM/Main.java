@@ -7,17 +7,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Main {
+	
+	public static List<Article> articles;
+	
+	static {
+		articles = new ArrayList<>();
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("== 프로그램 시작 ==");
-		
+				
+		makeTestData();
+
 		Scanner sc = new Scanner(System.in);
 		
 		int articlesSize = 0;
 		
-		List<Article> articles = new ArrayList<>();
-		
 		while(true) {
-			System.out.flush();
 			System.out.printf("명령어	: ");
 			String cmd = sc.nextLine().trim();
 			if(cmd.equals("article list")) {
@@ -28,7 +34,7 @@ public class Main {
 					System.out.println("번호	/	제목	/	조회");
 					for (int i = articles.size() - 1; i >= 0; i--) {
 						Article article = articles.get(i);
-						System.out.println(article.id + "	/	" + article.titles + "	/	" + article.view);
+						System.out.println(article.id + "	/	" + article.titles.substring(0, 3) + "	/	" + article.view);
 					}
 				}
 			}
@@ -146,6 +152,26 @@ public class Main {
 		System.out.println("== 프로그램 종료 ==");
 		sc.close();
 	}
+	
+	static void makeTestData() {
+		System.out.println("테스트를 위한 데이터를 생성합니다");
+		int articlesSize = 0;
+		for(int i = 1; i <= 3; ++i) {
+			int id = articlesSize + 1;
+			String titles = "test_titles" + i;
+			String contents = "test_contents" + i;
+			
+			Date now = new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String date = formatter.format(now);
+			int view = 0;
+			
+			Article article = new Article(id, titles, contents, date, view);
+			articles.add(article);
+			articlesSize++;
+		}
+	}
+	
 	private static boolean isNumeric(String str){
         return str != null && str.matches("[0-9.]+");
     }
