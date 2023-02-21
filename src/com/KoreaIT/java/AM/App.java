@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.KoreaIT.java.AM.controller.ArticleController;
+import com.KoreaIT.java.AM.controller.MemberController;
 import com.KoreaIT.java.AM.Article.Article;
 import com.KoreaIT.java.AM.Article.Member;
 import com.KoreaIT.java.AM.Util.Util;
@@ -26,7 +28,9 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 		
 		int Id_Size = 3;
-		int membersSize = 0;
+		
+		MemberController memberController = new MemberController(members, sc);
+		ArticleController articleController = new ArticleController();
 		
 		while(true) {
 			System.out.printf("명령어	: ");
@@ -41,42 +45,8 @@ public class App {
 				break;
 			}
 			
-			if(cmd.equals("sign up")) {
-				int id = membersSize + 1;
-				String date = Util.NowDate();
-				String Login_ID = null;
-				while(true) {
-					System.out.printf("로그인 아이디	: ");
-					Login_ID = sc.nextLine();
-					
-					if(isJoinable_ID(Login_ID) == false) {
-						System.out.println("이미 사용중인 아이디입니다");
-						continue;
-					}
-					break;
-				}
-				
-				String Login_PW = null;
-				String PW_Confirm = null;
-				while(true) {
-					System.out.printf("로그인 비밀번호	: ");
-					Login_PW = sc.nextLine();
-					System.out.printf("비밀번호 재확인	: ");
-					PW_Confirm = sc.nextLine();
-					if (Login_PW.equals(PW_Confirm) == false) {
-						System.out.println("비밀번호를 다시 입력해주세요");
-						continue;
-					}
-					break;
-				}
-				System.out.printf("이름	: ");
-				String name = sc.nextLine();
-				
-				Member member = new Member(id, date, Login_ID, Login_PW, name);
-				members.add(member);
-				
-				System.out.println(id + "번 회원이 가입되었습니다");
-				membersSize++;
+			if (cmd.equals("sign up")) {
+			memberController.doJoin();
 			}
 			
 			else if(cmd.equals("article list")) {
