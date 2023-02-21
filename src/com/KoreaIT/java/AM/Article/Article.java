@@ -11,9 +11,9 @@ public class Article extends dto {
 	
 	public Article(int id, String date, String titles, String contents, int view) {
 		this.id = id;
+		this.date = date;
 		this.titles = titles;
 		this.contents = contents;
-		this.date = date;
 		this.view = view;
 	}
 	

@@ -15,10 +15,10 @@ public class MemberController {
 		this.sc = sc;
 	}
 
-	int lastMemberId = 0;
+	int Id_Size = 0;
 
 	public void doJoin() {
-		int id = lastMemberId + 1;
+		int id = Id_Size + 1;
 		String date = Util.NowDate();
 		String Login_Id = null;
 
@@ -56,7 +56,7 @@ public class MemberController {
 		members.add(member);
 
 		System.out.println(id + "번 회원이 가입되었습니다");
-		lastMemberId++;
+		Id_Size++;
 
 	}
 

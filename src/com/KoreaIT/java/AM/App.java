@@ -27,10 +27,8 @@ public class App {
 
 		Scanner sc = new Scanner(System.in);
 		
-		int Id_Size = 3;
-		
 		MemberController memberController = new MemberController(members, sc);
-		ArticleController articleController = new ArticleController();
+		ArticleController articleController = new ArticleController(articles, sc);
 		
 		while(true) {
 			System.out.printf("명령어	: ");
@@ -46,89 +44,27 @@ public class App {
 			}
 			
 			if (cmd.equals("sign up")) {
-			memberController.doJoin();
+				memberController.doJoin();
 			}
 			
 			else if(cmd.equals("article list")) {
-				if(articles.size() == 0) {
-					System.out.println("게시글이 없습니다");
-				}
-				else {
-					System.out.println("번호	/	제목	/	조회");
-					for (int i = articles.size() - 1; i >= 0; i--) {
-						Article article = articles.get(i);
-						System.out.println(article.id + "	/	" + article.titles.substring(0, 3) + "	/	" + article.view);
-					}
-				}
+				articleController.dolist();
 			}
 			
 			else if(cmd.equals("article write")) {
-				int id = Id_Size + 1;
-				String date = Util.NowDate();
-				System.out.printf("제목	: ");
-				String titles = sc.nextLine();
-				System.out.printf("내용	: ");
-				String contents = sc.nextLine();
-				
-				Article article = new Article(id, titles, contents, date);
-				articles.add(article);
-				
-				System.out.println(id + "번글이 생성되었습니다");
-				Id_Size++;
+				articleController.dowrite();
 			}
 			
 			else if(cmd.startsWith("article detail")) {
-				String[] num = cmd.split(" ");
-				int id = Integer.parseInt(num[2]);
-				Article foundArticle = getArticleById(id);
-				
-				if (foundArticle == null) {
-					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
-					continue;
-				}
-				
-				foundArticle.increaseView();
-				
-				System.out.println("번호	: " + foundArticle.id);
-				System.out.println("제목	: " + foundArticle.titles);
-				System.out.println("내용	: " + foundArticle.contents);
-				System.out.println("날짜	: " + foundArticle.date);
-				System.out.println("조회	: " + foundArticle.view);
+				articleController.dodetail();
 			}
 			
 			else if(cmd.startsWith("article delete")) {
-				String[] num = cmd.split(" ");
-				int id = Integer.parseInt(num[2]);
-				int foundIndex = getArticleIndexById(id);
-				
-				if (foundIndex == -1) {
-					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
-					continue;
-				}
-				
-				articles.remove(foundIndex);
-				System.out.printf("%d번 글을 삭제했습니다.\n", id);
+				articleController.dodelete();
 			}
 			
 			else if(cmd.startsWith("article modify")) {
-				String[] num = cmd.split(" ");
-				int id = Integer.parseInt(num[2]);
-				Article foundArticle = getArticleById(id);
-				
-				if (foundArticle == null) {
-					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
-					continue;
-				}
-				
-				System.out.printf("제목 : ");
-				String titles = sc.nextLine();
-				System.out.printf("내용 : ");
-				String contents = sc.nextLine();
-
-				foundArticle.titles = titles;
-				foundArticle.contents = contents;
-
-				System.out.printf("%d번 글을 수정했습니다.\n", id);
+				articleController.domodify();
 			}
 
 			else {
@@ -138,53 +74,11 @@ public class App {
 		System.out.println("== 프로그램 종료 ==");
 		sc.close();
 	}
-	private boolean isJoinable_ID(String loginId) {
-
-		int index = getMemberIndexByLoginId(loginId);
-
-		if (index == -1) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private int getMemberIndexByLoginId(String Login_Id) {
-		int i = 0;
-		for (Member member : members) {
-			if (member.Login_Id.equals(Login_Id)) {
-				return i;
-			}
-			i++;
-		}
-		return -1;
-	}
-
-	private int getArticleIndexById(int id) {
-		int i = 0;
-		for (Article article : articles) {
-			if (article.id == id) {
-				return i;
-			}
-			i++;
-		}
-		return -1;
-	}
-
-	private Article getArticleById(int id) {
-		int index = getArticleIndexById(id);
-
-		if (index != -1) {
-			return articles.get(index);
-		}
-
-		return null;
-	}
 	
 	public static void makeTestData() {
 		System.out.println("테스트를 위한 데이터를 생성합니다");
 		for(int i = 1; i <= 3; ++i) {
-			articles.add(new Article(i, "test_titles_" + i, "test_contents_" + i, Util.NowDate(), 0));
+			articles.add(new Article(i, Util.NowDate(), "t_t_" + i, "t_c_" + i, 0));
 		}
 	}
 }
