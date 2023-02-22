@@ -1,5 +1,6 @@
 package com.KoreaIT.java.AM.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,8 +14,8 @@ public class ArticleController extends Controller {
 	private String cmd;
 	private String actionMethodName;
 	
-	public ArticleController(List<Article> articles, Scanner sc) {
-		this.articles = articles;
+	public ArticleController(Scanner sc) {
+		this.articles = new ArrayList<>();
 		this.sc = sc;
 	}
 	
@@ -43,7 +44,14 @@ public class ArticleController extends Controller {
 		}
 	}
 	
-	public void dolist() {
+	public void makeTestData() {
+		System.out.println("테스트를 위한 데이터를 생성합니다");
+		for(int i = 1; i <= 3; ++i) {
+			articles.add(new Article(i, Util.NowDate(), "제목" + i, "내용" + i, 0));
+		}
+	}
+	
+	private void dolist() {
 		if(articles.size() == 0) {
 			System.out.println("게시글이 없습니다");
 		}
@@ -56,7 +64,7 @@ public class ArticleController extends Controller {
 		}
 	}
 	
-	public void dowrite() {
+	private void dowrite() {
 		int id = Article_Id_Size + 1;
 		String date = Util.NowDate();
 		System.out.printf("제목	: ");
@@ -71,7 +79,7 @@ public class ArticleController extends Controller {
 		Article_Id_Size++;
 	}
 	
-	public void dodetail() {
+	private void dodetail() {
 		String[] num = cmd.split(" ");
 		int id = Integer.parseInt(num[2]);
 		Article foundArticle = getArticleById(id);
@@ -93,7 +101,7 @@ public class ArticleController extends Controller {
 		}
 	}
 	
-	public void dodelete() {
+	private void dodelete() {
 		String[] num = cmd.split(" ");
 		int id = Integer.parseInt(num[2]);
 		int foundIndex = getArticleIndexById(id);
@@ -109,7 +117,7 @@ public class ArticleController extends Controller {
 		}
 	}
 	
-	public void domodify() {
+	private void domodify() {
 		String[] num = cmd.split(" ");
 		int id = Integer.parseInt(num[2]);
 		Article foundArticle = getArticleById(id);

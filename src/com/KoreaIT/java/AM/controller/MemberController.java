@@ -1,5 +1,6 @@
 package com.KoreaIT.java.AM.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,8 +13,8 @@ public class MemberController extends Controller {
 	private String cmd;
 	private String actionMethodName;
 
-	public MemberController(List<Member> members, Scanner sc) {
-		this.members = members;
+	public MemberController(Scanner sc) {
+		this.members = new ArrayList<>();
 		this.sc = sc;
 	}
 
@@ -30,7 +31,7 @@ public class MemberController extends Controller {
 		}
 	}
 
-	public void doUp() {
+	private void doUp() {
 		int id = Member_Id_Size + 1;
 		String date = Util.NowDate();
 		String Login_Id = null;
@@ -95,3 +96,4 @@ public class MemberController extends Controller {
 		return -1;
 	}
 }
+

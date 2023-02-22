@@ -1,35 +1,22 @@
 package com.KoreaIT.java.AM;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.KoreaIT.java.AM.controller.ArticleController;
 import com.KoreaIT.java.AM.controller.Controller;
 import com.KoreaIT.java.AM.controller.MemberController;
-import com.KoreaIT.java.AM.Article.Article;
-import com.KoreaIT.java.AM.Article.Member;
-import com.KoreaIT.java.AM.Util.Util;
 
 public class App {
 	
-	public static List<Article> articles;
-	public static List<Member> members;
-	
-	static {
-		articles = new ArrayList<>();
-		members = new ArrayList<>();
-	}
-	
 	public void run() {
 		System.out.println("== 프로그램 시작 ==");
-				
-		makeTestData();
 
 		Scanner sc = new Scanner(System.in);
 		
-		MemberController memberController = new MemberController(members, sc);
-		ArticleController articleController = new ArticleController(articles, sc);
+		MemberController memberController = new MemberController(sc);
+		ArticleController articleController = new ArticleController(sc);
+		
+		articleController.makeTestData();
 		
 		Controller controller;
 		
@@ -74,12 +61,5 @@ public class App {
 		}
 		System.out.println("== 프로그램 종료 ==");
 		sc.close();
-	}
-	
-	public static void makeTestData() {
-		System.out.println("테스트를 위한 데이터를 생성합니다");
-		for(int i = 1; i <= 3; ++i) {
-			articles.add(new Article(i, Util.NowDate(), "t_t_" + i, "t_c_" + i, 0));
-		}
 	}
 }
