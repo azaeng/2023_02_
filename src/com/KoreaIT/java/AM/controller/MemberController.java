@@ -24,13 +24,13 @@ public class MemberController extends Controller {
 		this.actionMethodName = actionMethodName;
 		
 		switch(actionMethodName) {
-		case "join":
-			doJoin();
+		case "up":
+			doUp();
 			break;
 		}
 	}
 
-	public void doJoin() {
+	public void doUp() {
 		int id = Member_Id_Size + 1;
 		String date = Util.NowDate();
 		String Login_Id = null;

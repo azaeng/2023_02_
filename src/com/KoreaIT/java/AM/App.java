@@ -61,7 +61,7 @@ public class App {
 			if(controllerName.equals("article")) {
 				controller = articleController;
 			}
-			else if(controllerName.equals("member")) {
+			else if(controllerName.equals("sign")) {
 				controller = memberController;
 			}
 			else {
@@ -71,33 +71,6 @@ public class App {
 			
 			controller.doAction(cmd, actionMethodName);
 			
-//			if (cmd.equals("sign up")) {
-//				memberController.doJoin();
-//			}
-//			
-//			else if(cmd.equals("article list")) {
-//				articleController.dolist();
-//			}
-//			
-//			else if(cmd.equals("article write")) {
-//				articleController.dowrite();
-//			}
-//			
-//			else if(cmd.startsWith("article detail")) {
-//				articleController.dodetail(cmd);
-//			}
-//			
-//			else if(cmd.startsWith("article delete")) {
-//				articleController.dodelete(cmd);
-//			}
-//			
-//			else if(cmd.startsWith("article modify")) {
-//				articleController.domodify(cmd);
-//			}
-//
-//			else {
-//				System.out.println("존재하지 않는 명령어입니다");
-//			}
 		}
 		System.out.println("== 프로그램 종료 ==");
 		sc.close();

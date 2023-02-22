@@ -23,6 +23,24 @@ public class ArticleController extends Controller {
 	public void doAction(String cmd, String actionMethodName) {
 		this.cmd = cmd;
 		this.actionMethodName = actionMethodName;
+		
+		switch(actionMethodName) {
+		case "list":
+			dolist();
+			break;
+		case "write":
+			dowrite();
+			break;
+		case "detail":
+			dodetail();
+			break;
+		case "delete":
+			dodelete();
+			break;
+		case "modify":
+			domodify();
+			break;
+		}
 	}
 	
 	public void dolist() {
