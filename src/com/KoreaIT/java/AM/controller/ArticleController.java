@@ -48,7 +48,7 @@ public class ArticleController extends Controller {
 	}
 	
 	public void makeTestData() {
-		System.out.println("테스트를 위한 데이터를 생성합니다");
+		System.out.println("테스트를 위한 게시물을 생성합니다");
 		for(int i = 1; i <= 3; ++i) {
 			articles.add(new Article(i, Util.NowDate(), "제목" + i, "내용" + i, 0));
 		}
@@ -84,62 +84,78 @@ public class ArticleController extends Controller {
 	
 	private void dodetail() {
 		String[] num = cmd.split(" ");
-		int id = Integer.parseInt(num[2]);
-		Article foundArticle = getArticleById(id);
-		while(true) {
-			if (foundArticle == null) {
-				System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
-				continue;
+		if(num.length == 3) {
+			int id = Integer.parseInt(num[2]);
+			Article foundArticle = getArticleById(id);
+			while(true) {
+				if (foundArticle == null) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+					continue;
+				}
+				
+				foundArticle.increaseView();
+				
+				System.out.println("번호	: " + foundArticle.id);
+				System.out.println("제목	: " + foundArticle.titles);
+				System.out.println("내용	: " + foundArticle.contents);
+				System.out.println("날짜	: " + foundArticle.date);
+				System.out.println("조회	: " + foundArticle.view);
+				
+				break;
 			}
-			
-			foundArticle.increaseView();
-			
-			System.out.println("번호	: " + foundArticle.id);
-			System.out.println("제목	: " + foundArticle.titles);
-			System.out.println("내용	: " + foundArticle.contents);
-			System.out.println("날짜	: " + foundArticle.date);
-			System.out.println("조회	: " + foundArticle.view);
-			
-			break;
+			return;
 		}
+		else {
+			System.out.println("명령어를 확인해주세요");
+					}
 	}
 	
 	private void dodelete() {
 		String[] num = cmd.split(" ");
-		int id = Integer.parseInt(num[2]);
-		int foundIndex = getArticleIndexById(id);
-		while(true) {
-			if (foundIndex == -1) {
-				System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
-				continue;
+		if(num.length == 3) {
+			int id = Integer.parseInt(num[2]);
+			int foundIndex = getArticleIndexById(id);
+			while(true) {
+				if (foundIndex == -1) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+					continue;
+				}
+				
+				articles.remove(foundIndex);
+				System.out.printf("%d번 글을 삭제했습니다.\n", id);
+				break;
 			}
-			
-			articles.remove(foundIndex);
-			System.out.printf("%d번 글을 삭제했습니다.\n", id);
-			break;
+		}
+		else {
+			System.out.println("명령어를 확인해주세요");
 		}
 	}
 	
 	private void domodify() {
 		String[] num = cmd.split(" ");
-		int id = Integer.parseInt(num[2]);
-		Article foundArticle = getArticleById(id);
-		while(true) {
-			if (foundArticle == null) {
-				System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
-				continue;
+		if(num.length == 3) {
+			int id = Integer.parseInt(num[2]);
+			Article foundArticle = getArticleById(id);
+			while(true) {
+				if (foundArticle == null) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+					continue;
+				}
+				
+				System.out.printf("제목 : ");
+				String titles = sc.nextLine();
+				System.out.printf("내용 : ");
+				String contents = sc.nextLine();
+
+				foundArticle.titles = titles;
+				foundArticle.contents = contents;
+
+				System.out.printf("%d번 글을 수정했습니다.\n", id);
+				break;
 			}
-			
-			System.out.printf("제목 : ");
-			String titles = sc.nextLine();
-			System.out.printf("내용 : ");
-			String contents = sc.nextLine();
-
-			foundArticle.titles = titles;
-			foundArticle.contents = contents;
-
-			System.out.printf("%d번 글을 수정했습니다.\n", id);
-			break;
+		}
+		else {
+			System.out.println("명령어를 확인해주세요");
 		}		
 	}
 	

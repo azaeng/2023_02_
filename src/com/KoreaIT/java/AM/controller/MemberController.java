@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.KoreaIT.java.AM.Article.Article;
 import com.KoreaIT.java.AM.Article.Member;
 import com.KoreaIT.java.AM.Util.Util;
 
 public class MemberController extends Controller {
+	
 	private List<Member> members;
 	private Scanner sc;
 	private String cmd;
 	private String actionMethodName;
+	
+	private Member LoginedMember = null;
 
 	public MemberController(Scanner sc) {
 		this.members = new ArrayList<>();
@@ -36,7 +40,14 @@ public class MemberController extends Controller {
 			break;
 		}
 	}
-
+	
+	public void makeTestData() {
+		System.out.println("테스트를 위한 회원 데이터를 생성합니다");
+		for(int i = 1; i <= 3; ++i) {
+			members.add(new Member(i, Util.NowDate(), "id_" + i, "pw_" + i, "회원" + i));
+		}
+	}
+	
 	private void doUp() {
 		int id = Member_Id_Size + 1;
 		String date = Util.NowDate();
@@ -44,7 +55,7 @@ public class MemberController extends Controller {
 
 		while (true) {
 
-			System.out.printf("로그인 아이디 : ");
+			System.out.printf("로그인 아이디	: ");
 			Login_Id = sc.nextLine();
 
 			if (isJoinable_ID(Login_Id) == false) {
@@ -58,9 +69,9 @@ public class MemberController extends Controller {
 		String Login_Pw = null;
 		String Pw_Confirm = null;
 		while (true) {
-			System.out.printf("로그인 비밀번호 : ");
+			System.out.printf("로그인 비밀번호	: ");
 			Login_Pw = sc.nextLine();
-			System.out.printf("로그인 비밀번호 재확인: ");
+			System.out.printf("비밀번호 재확인	: ");
 			Pw_Confirm = sc.nextLine();
 
 			if (Login_Pw.equals(Pw_Confirm) == false) {
@@ -69,7 +80,7 @@ public class MemberController extends Controller {
 			}
 			break;
 		}
-		System.out.printf("이름 : ");
+		System.out.printf("사용자 이름		: ");
 		String name = sc.nextLine();
 
 		Member member = new Member(id, date, Login_Id, Login_Pw, name);
@@ -81,28 +92,30 @@ public class MemberController extends Controller {
 	}
 	
 	public void doIn() {
-		while (true) {
-
-			System.out.printf("로그인 아이디 : ");
-			String Login_Id = sc.nextLine();
-			
-			System.out.printf("로그인 비밀번호 : ");
-			String Login_Pw = sc.nextLine();
-			
-			Member member =SignIn_Id(Login_Id);
-			
-			if (member == null) {
-				System.out.println("해당 회원은 존재하지 않습니다");
-				return;
-			}
-			
-			if(member.Login_Pw.equals(Login_Pw) == false) {
-				System.out.println("비밀번호를 확인해주세요");
-				return;
-			}
-
-			System.out.println(member.name + "님이 로그인되었습니다");
+		if(LoginedMember != null) {
+			System.out.println("로그아웃 후 이용해주세요");
 		}
+		System.out.printf("로그인 아이디	: ");
+		String Login_Id = sc.nextLine();
+		
+		System.out.printf("로그인 비밀번호	: ");
+		String Login_Pw = sc.nextLine();
+		
+		Member member =SignIn_Id(Login_Id);
+		
+		if (member == null) {
+			System.out.println("해당 회원은 존재하지 않습니다");
+			return;
+		}
+		
+		if(member.Login_Pw.equals(Login_Pw) == false) {
+			System.out.println("비밀번호를 확인해주세요");
+			return;
+		}
+
+		LoginedMember = member;
+		
+		System.out.println(member.name + "님이 로그인되었습니다");
 
 	}
 
