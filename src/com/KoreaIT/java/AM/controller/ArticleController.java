@@ -6,17 +6,24 @@ import java.util.Scanner;
 import com.KoreaIT.java.AM.Article.Article;
 import com.KoreaIT.java.AM.Util.Util;
 
-public class ArticleController {
+public class ArticleController extends Controller {
+	
 	private List<Article> articles;
 	private Scanner sc;
+	private String cmd;
+	private String actionMethodName;
 	
 	public ArticleController(List<Article> articles, Scanner sc) {
 		this.articles = articles;
 		this.sc = sc;
 	}
 	
-	int Id_Size = 3;
-	String cmd = null;
+	int Article_Id_Size = 3;
+	
+	public void doAction(String cmd, String actionMethodName) {
+		this.cmd = cmd;
+		this.actionMethodName = actionMethodName;
+	}
 	
 	public void dolist() {
 		if(articles.size() == 0) {
@@ -32,7 +39,7 @@ public class ArticleController {
 	}
 	
 	public void dowrite() {
-		int id = Id_Size + 1;
+		int id = Article_Id_Size + 1;
 		String date = Util.NowDate();
 		System.out.printf("제목	: ");
 		String titles = sc.nextLine();
@@ -43,7 +50,7 @@ public class ArticleController {
 		articles.add(article);
 		
 		System.out.println(id + "번글이 생성되었습니다");
-		Id_Size++;
+		Article_Id_Size++;
 	}
 	
 	public void dodetail() {

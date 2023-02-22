@@ -6,19 +6,32 @@ import java.util.Scanner;
 import com.KoreaIT.java.AM.Article.Member;
 import com.KoreaIT.java.AM.Util.Util;
 
-public class MemberController {
+public class MemberController extends Controller {
 	private List<Member> members;
 	private Scanner sc;
+	private String cmd;
+	private String actionMethodName;
 
 	public MemberController(List<Member> members, Scanner sc) {
 		this.members = members;
 		this.sc = sc;
 	}
 
-	int Id_Size = 0;
+	int Member_Id_Size = 0;
+	
+	public void doAction(String cmd, String actionMethodName) {
+		this.cmd = cmd;
+		this.actionMethodName = actionMethodName;
+		
+		switch(actionMethodName) {
+		case "join":
+			doJoin();
+			break;
+		}
+	}
 
 	public void doJoin() {
-		int id = Id_Size + 1;
+		int id = Member_Id_Size + 1;
 		String date = Util.NowDate();
 		String Login_Id = null;
 
@@ -56,7 +69,7 @@ public class MemberController {
 		members.add(member);
 
 		System.out.println(id + "번 회원이 가입되었습니다");
-		Id_Size++;
+		Member_Id_Size++;
 
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.KoreaIT.java.AM.controller.ArticleController;
+import com.KoreaIT.java.AM.controller.Controller;
 import com.KoreaIT.java.AM.controller.MemberController;
 import com.KoreaIT.java.AM.Article.Article;
 import com.KoreaIT.java.AM.Article.Member;
@@ -30,6 +31,8 @@ public class App {
 		MemberController memberController = new MemberController(members, sc);
 		ArticleController articleController = new ArticleController(articles, sc);
 		
+		Controller controller;
+		
 		while(true) {
 			System.out.printf("명령어	: ");
 			String cmd = sc.nextLine().trim();
@@ -43,33 +46,58 @@ public class App {
 				break;
 			}
 			
-			if (cmd.equals("sign up")) {
-				memberController.doJoin();
+			String[] num = cmd.split(" ");
+			String controllerName = num[0];
+			
+			if (num.length == 1) {
+				System.out.println("명령어를 확인해주세요");
+				continue;
 			}
 			
-			else if(cmd.equals("article list")) {
-				articleController.dolist();
-			}
+			String actionMethodName = num[1];
 			
-			else if(cmd.equals("article write")) {
-				articleController.dowrite();
-			}
+			controller = null;
 			
-			else if(cmd.startsWith("article detail")) {
-				articleController.dodetail();
+			if(controllerName.equals("article")) {
+				controller = articleController;
 			}
-			
-			else if(cmd.startsWith("article delete")) {
-				articleController.dodelete();
+			else if(controllerName.equals("member")) {
+				controller = memberController;
 			}
-			
-			else if(cmd.startsWith("article modify")) {
-				articleController.domodify();
-			}
-
 			else {
 				System.out.println("존재하지 않는 명령어입니다");
+				continue;
 			}
+			
+			controller.doAction(cmd, actionMethodName);
+			
+//			if (cmd.equals("sign up")) {
+//				memberController.doJoin();
+//			}
+//			
+//			else if(cmd.equals("article list")) {
+//				articleController.dolist();
+//			}
+//			
+//			else if(cmd.equals("article write")) {
+//				articleController.dowrite();
+//			}
+//			
+//			else if(cmd.startsWith("article detail")) {
+//				articleController.dodetail(cmd);
+//			}
+//			
+//			else if(cmd.startsWith("article delete")) {
+//				articleController.dodelete(cmd);
+//			}
+//			
+//			else if(cmd.startsWith("article modify")) {
+//				articleController.domodify(cmd);
+//			}
+//
+//			else {
+//				System.out.println("존재하지 않는 명령어입니다");
+//			}
 		}
 		System.out.println("== 프로그램 종료 ==");
 		sc.close();
