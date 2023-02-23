@@ -99,48 +99,49 @@ public class ArticleController extends Controller {
 		if(num.length == 3) {
 			int id = Integer.parseInt(num[2]);
 			Article foundArticle = getArticleById(id);
-			while(true) {
-				if (foundArticle == null) {
-					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
-					continue;
-				}
-				
-				foundArticle.increaseView();
-				
-				System.out.println("번호	: " + foundArticle.id);
-				System.out.println("날짜	: " + foundArticle.date);
-				System.out.println("작성자	: " + foundArticle.memberId);
-				System.out.println("제목	: " + foundArticle.titles);
-				System.out.println("내용	: " + foundArticle.contents);
-				System.out.println("조회	: " + foundArticle.view);
-				
-				break;
+			
+			if (foundArticle == null) {
+				System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+				return;
 			}
-			return;
+			
+			foundArticle.increaseView();
+			
+			System.out.println("번호	: " + foundArticle.id);
+			System.out.println("날짜	: " + foundArticle.date);
+			System.out.println("작성자	: " + foundArticle.memberId);
+			System.out.println("제목	: " + foundArticle.titles);
+			System.out.println("내용	: " + foundArticle.contents);
+			System.out.println("조회	: " + foundArticle.view);
 		}
 		else {
 			System.out.println("명령어를 확인해주세요");
-					}
+			return;
+		}
 	}
 	
 	private void dodelete() {
 		String[] num = cmd.split(" ");
 		if(num.length == 3) {
 			int id = Integer.parseInt(num[2]);
-			int foundIndex = getArticleIndexById(id);
-			while(true) {
-				if (foundIndex == -1) {
-					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
-					continue;
-				}
-				
-				articles.remove(foundIndex);
-				System.out.printf("%d번 글을 삭제했습니다.\n", id);
-				break;
+			Article foundArticle = getArticleById(id);
+			
+			if (foundArticle == null) {
+				System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+				return;
 			}
+			
+			if (foundArticle.memberId != LoginedMember.id) {
+				System.out.println("권한이 없습니다");
+				return;
+			}
+			
+			articles.remove(foundArticle);
+			System.out.printf("%d번 글을 삭제했습니다.\n", id);
 		}
 		else {
 			System.out.println("명령어를 확인해주세요");
+			return;
 		}
 	}
 	
@@ -149,26 +150,29 @@ public class ArticleController extends Controller {
 		if(num.length == 3) {
 			int id = Integer.parseInt(num[2]);
 			Article foundArticle = getArticleById(id);
-			while(true) {
-				if (foundArticle == null) {
-					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
-					continue;
-				}
-				
-				System.out.printf("제목 : ");
-				String titles = sc.nextLine();
-				System.out.printf("내용 : ");
-				String contents = sc.nextLine();
-
-				foundArticle.titles = titles;
-				foundArticle.contents = contents;
-
-				System.out.printf("%d번 글을 수정했습니다.\n", id);
-				break;
+			if (foundArticle == null) {
+				System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+				return;
 			}
+			
+			if (foundArticle.memberId != LoginedMember.id) {
+				System.out.println("권한이 없습니다");
+				return;
+			}
+			
+			System.out.printf("제목 : ");
+			String titles = sc.nextLine();
+			System.out.printf("내용 : ");
+			String contents = sc.nextLine();
+
+			foundArticle.titles = titles;
+			foundArticle.contents = contents;
+
+			System.out.printf("%d번 글을 수정했습니다.\n", id);
 		}
 		else {
 			System.out.println("명령어를 확인해주세요");
+			return;
 		}		
 	}
 	
