@@ -30,15 +30,27 @@ public class ArticleController extends Controller {
 			dolist();
 			break;
 		case "write":
+			if (isLogined() == false) {
+				System.out.println("로그인 후 이용해주세요");
+				return;
+			}
 			dowrite();
 			break;
 		case "detail":
 			dodetail();
 			break;
 		case "delete":
+			if (isLogined() == false) {
+				System.out.println("로그인 후 이용해주세요");
+				return;
+			}
 			dodelete();
 			break;
 		case "modify":
+			if (isLogined() == false) {
+				System.out.println("로그인 후 이용해주세요");
+				return;
+			}
 			domodify();
 			break;
 		default:
@@ -50,7 +62,7 @@ public class ArticleController extends Controller {
 	public void makeTestData() {
 		System.out.println("테스트를 위한 게시물을 생성합니다");
 		for(int i = 1; i <= 3; ++i) {
-			articles.add(new Article(i, Util.NowDate(), "제목" + i, "내용" + i, 0));
+			articles.add(new Article(i, Util.NowDate(), i, "제목" + i, "내용" + i, 0));
 		}
 	}
 	
@@ -59,10 +71,10 @@ public class ArticleController extends Controller {
 			System.out.println("게시글이 없습니다");
 		}
 		else {
-			System.out.println("  번호	/	제____목	/	  조회");
+			System.out.println("  번호	/  제____목   /  조회   /   작성자");
 			for (int i = articles.size() - 1; i >= 0; i--) {
 				Article article = articles.get(i);
-				System.out.printf("%4d	/	%7s	/	%4d\n", article.id, article.titles, article.view);
+				System.out.printf("%4d	/ %7s   / %4d   / %4d\n", article.id, article.titles, article.view, article.memberId);
 			}
 		}
 	}
@@ -75,7 +87,7 @@ public class ArticleController extends Controller {
 		System.out.printf("내용	: ");
 		String contents = sc.nextLine();
 		
-		Article article = new Article(id, titles, contents, date);
+		Article article = new Article(id, date, LoginedMember.id, titles, contents);
 		articles.add(article);
 		
 		System.out.println(id + "번글이 생성되었습니다");
@@ -96,9 +108,10 @@ public class ArticleController extends Controller {
 				foundArticle.increaseView();
 				
 				System.out.println("번호	: " + foundArticle.id);
+				System.out.println("날짜	: " + foundArticle.date);
+				System.out.println("작성자	: " + foundArticle.memberId);
 				System.out.println("제목	: " + foundArticle.titles);
 				System.out.println("내용	: " + foundArticle.contents);
-				System.out.println("날짜	: " + foundArticle.date);
 				System.out.println("조회	: " + foundArticle.view);
 				
 				break;

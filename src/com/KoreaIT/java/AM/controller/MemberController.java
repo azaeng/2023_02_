@@ -14,15 +14,11 @@ public class MemberController extends Controller {
 	private Scanner sc;
 	private String cmd;
 	private String actionMethodName;
-	
-	private Member LoginedMember = null;
 
 	public MemberController(Scanner sc) {
 		this.members = new ArrayList<>();
 		this.sc = sc;
 	}
-
-	int Member_Id_Size = 0;
 	
 	public void doAction(String cmd, String actionMethodName) {
 		this.cmd = cmd;
@@ -52,7 +48,7 @@ public class MemberController extends Controller {
 	}
 	
 	private void doUp() {
-		int id = Member_Id_Size + 1;
+		int id = members.size() + 1;
 		String date = Util.NowDate();
 		String Login_Id = null;
 
@@ -90,7 +86,6 @@ public class MemberController extends Controller {
 		members.add(member);
 
 		System.out.println(id + "번 회원이 가입되었습니다");
-		Member_Id_Size++;
 
 	}
 	
@@ -128,13 +123,10 @@ public class MemberController extends Controller {
 			System.out.println("로그인 후 이용해주세요");
 			return;
 		}
+		
 		LoginedMember = null;
 				
 		System.out.println("로그아웃 되었습니다");
-	}
-	
-	private boolean isLogined() {
-		return LoginedMember != null;
 	}
 
 	private Member SignIn_Id(String Login_Id) {
