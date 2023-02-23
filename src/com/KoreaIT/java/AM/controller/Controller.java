@@ -6,7 +6,7 @@ public abstract class Controller {
 	
 	public static Member LoginedMember = null;
 	
-	public boolean isLogined() {
+	public static boolean isLogined() {
 		return LoginedMember != null;
 	}
 	

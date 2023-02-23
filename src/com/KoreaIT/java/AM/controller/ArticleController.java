@@ -30,27 +30,15 @@ public class ArticleController extends Controller {
 			dolist();
 			break;
 		case "write":
-			if (isLogined() == false) {
-				System.out.println("로그인 후 이용해주세요");
-				return;
-			}
 			dowrite();
 			break;
 		case "detail":
 			dodetail();
 			break;
 		case "delete":
-			if (isLogined() == false) {
-				System.out.println("로그인 후 이용해주세요");
-				return;
-			}
 			dodelete();
 			break;
 		case "modify":
-			if (isLogined() == false) {
-				System.out.println("로그인 후 이용해주세요");
-				return;
-			}
 			domodify();
 			break;
 		default:

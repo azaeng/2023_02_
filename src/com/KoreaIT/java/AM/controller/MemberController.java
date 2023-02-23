@@ -90,10 +90,7 @@ public class MemberController extends Controller {
 	}
 	
 	private void doIn() {
-		if(isLogined()) {
-			System.out.println("로그아웃 후 이용해주세요");
-			return;
-		}
+		
 		System.out.printf("로그인 아이디	: ");
 		String Login_Id = sc.nextLine();
 		
@@ -119,10 +116,6 @@ public class MemberController extends Controller {
 	}
 	
 	private void doOut() {
-		if(isLogined() == false) {
-			System.out.println("로그인 후 이용해주세요");
-			return;
-		}
 		
 		LoginedMember = null;
 				

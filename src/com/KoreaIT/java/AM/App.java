@@ -57,6 +57,32 @@ public class App {
 				continue;
 			}
 			
+			String cmdCombine = controllerName + "/" + actionMethodName;
+			
+			switch (cmdCombine) {
+			case "article/write":
+			case "article/delete":
+			case "article/modify":
+			case "sign/out":
+				if (Controller.isLogined() == false) {
+					System.out.println("로그인 후 이용해주세요");
+					continue;
+				}
+
+				break;
+			}
+
+			switch (cmdCombine) {
+			case "sign/in":
+			case "sign/up":
+				if (Controller.isLogined()) {
+					System.out.println("로그아웃 후 이용해주세요");
+					continue;
+				}
+
+				break;
+			}
+			
 			controller.doAction(cmd, actionMethodName);
 			
 		}
