@@ -95,7 +95,7 @@ public class MemberController extends Controller {
 	}
 	
 	private void doIn() {
-		if(LoginedMember != null) {
+		if(isLogined()) {
 			System.out.println("로그아웃 후 이용해주세요");
 			return;
 		}
@@ -124,9 +124,17 @@ public class MemberController extends Controller {
 	}
 	
 	private void doOut() {
+		if(isLogined() == false) {
+			System.out.println("로그인 후 이용해주세요");
+			return;
+		}
 		LoginedMember = null;
 				
 		System.out.println("로그아웃 되었습니다");
+	}
+	
+	private boolean isLogined() {
+		return LoginedMember != null;
 	}
 
 	private Member SignIn_Id(String Login_Id) {
